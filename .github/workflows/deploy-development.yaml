@@ -1,0 +1,28 @@
+name: deploy-development
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Build Website
+        run: |
+          npx parcel build "./src/home.html" --dist-dir "./dist" --public-url "./" 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: static-site
+          path: ./dist
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Deploy Website on GitHub pages
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: static-site
