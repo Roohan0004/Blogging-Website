@@ -16,6 +16,8 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repositories
+        uses: actions/checkout@v4
       - name: Build Website
         run: |
           npx parcel build "./src/home.html" --dist-dir "./dist" --public-url "./"
