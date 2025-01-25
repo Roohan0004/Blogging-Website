@@ -15,14 +15,18 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: static-site
-          path: ./dist
+          name: "develop-artifact"
+          path: "./dist"
   Deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment: "development-env"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
       - name: Deploy Website on GitHub pages
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: static-site
+          artifact_name: "develop-artifact"
+          token: ${{github.token}}
